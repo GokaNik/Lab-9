@@ -1,22 +1,22 @@
-function updateProd(el) {
-    product_id = el.value
-    fetch('/in_stock/' + product_id, {
-        method: 'patch',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'in_stock': el.checked})
-    })
-    console.log(product_id)
-}
+function addContact() {
+    let contactName = document.getElementById('name').value; // Исправлено с 'prod_name' на 'name'
+    let phone = document.getElementById('phone').value;
 
-function addProduct() {
-    let prodName = document.getElementById('prod_name').value
-    let price = document.getElementById('price').value
     fetch('/add', {
-        method: 'post',
+        method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'prod_name': prodName,
-                             'price': price,
-                             'in_stock': true})
+        body: JSON.stringify({'name': contactName, 'phone': phone}) // Убраны ненужные поля
     })
-//    console.log("Add")
+    .then(response => response.json())
+    .then(data => {
+        if (data.contact) {
+            let contactList = document.getElementById("contactsList");
+            let li = document.createElement("li");
+            li.textContent = `${data.contact.name} - ${data.contact.phone}`;
+            contactList.appendChild(li);
+        } else {
+            alert("Ошибка при добавлении контакта!");
+        }
+    })
+    .catch(error => console.error("Ошибка:", error));
 }

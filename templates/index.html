@@ -1,32 +1,32 @@
 <html>
 <head>
-    <title>Best store!</title>
+    <title>Phone Book</title>
     <script type="text/javascript" src="/static/update.js"></script>
-    <link href="static/store.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Furniture store:</h1>
-    <h3>Add new product:</h3>
-    <form>
+    <h1>Phone Book</h1>
+    <h3>Add a new contact:</h3>
+    <form onsubmit="addContact(); return false;">
         <div>
-            <input type="text" name="prod_name" id="prod_name">
-            <label for="prod_name">Product name</label>
+            <input type="text" name="name" id="name" required>
+            <label for="name">Name</label>
         </div>
         <div>
-            <input type="number" name="price" id="price">
-            <label for="price">Price (rub.)</label>
+            <input type="text" name="phone" id="phone" required>
+            <label for="phone">Phone Number</label>
         </div>
-        <button onClick="addProduct()">Add</button>
+        <button type="submit">Add</button>
     </form>
-    <ul>
-        {% for product in products_list %}
+
+    <h3>Contacts:</h3>
+    <ul id="contactsList">
+        {% for contact in contacts_list %}
         <li>
             <div>
-                <div>{{ product['prod_name'] }}</div>
-                <div>{{ product['price'] }} rub.</div>
-                <input value="{{product['id']}}" onChange="updateProd(this)" name="in_stock" type="checkbox" {% if product.in_stock %} checked {% endif %}>
-                <label for="in_stock">In stock</label>
+                <div><strong>{{ contact.name }}</strong></div>
+                <div>{{ contact.phone }}</div>
             </div>
         </li>
         {% endfor %}
